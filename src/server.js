@@ -20,7 +20,7 @@ async function callScript(arg) {
     // const { exec } = require('child_process');
     console.log('executing arg: ' + arg);
     const {stdout} = await execAsync(arg);
-    var results = stdout.split("\n");
+    const results = stdout.split("\n");
     console.log(results);
     return results;
     // return exec(arg, // command line argument directly in string
@@ -52,18 +52,18 @@ router.get('/', function(req, res) {
     res.json({ message: 'Restful api used for searching local NAS.' });
 });
 
-router.get('/update', function (req, res) {
+router.get('/update', async function (req, res) {
     console.log('Updating');
     //call update script
-    callScript('updateNAS.sh');
+    await callScript('updateNAS.sh');
     res.json({ message: 'Update finished.' });
 });
 
-router.get('/search/:search_val', function (req, res) {
-    var value = req.params.search_val;
+router.get('/search/:search_val', async function (req, res) {
+    const value = req.params.search_val;
     console.log('Searching for: ' + value);
     //call search script
-    var search_results = callScript('searchNAS.sh ' + value);
+    const search_results = await callScript('searchNAS.sh ' + value);
     console.log(search_results);
     res.json({ message: 'Search finished.', results: search_results });
 });
