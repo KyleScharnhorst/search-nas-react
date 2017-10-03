@@ -57,7 +57,7 @@ class App extends Component {
             <div className="App">
                 <header className="App-header">
                     <img src={require("./images/RickandMortyPortal.png")} className="App-logo" alt="logo" />
-                    <h1 className="App-title">Search NAS Utility</h1>
+                    <h1 className="App-title">Search NAS Files</h1>
                 </header>
                 {
                     this.state.isUpdating ? <p className="App-update">Updating...</p> :
