@@ -16,17 +16,16 @@ var router = express.Router();
 // SCRIPT EXECUTION
 //
 function callScript() {
-    var util = require('util'),
-        exec = require('child_process').exec,
-        child;
+    const { exec } = require('child_process');
 
-    child = exec('dir', // command line argument directly in string
+    exec('dir', // command line argument directly in string
         function (error, stdout, stderr) {      // one easy function to capture data/errors
-            console.log('stdout: ' + stdout);
-            console.log('stderr: ' + stderr);
-            if (error !== null) {
-                console.log('exec error: ' + error);
+            if (error) {
+                console.error(`exec error: ${error}`);
+                return;
             }
+            console.log(`stdout: ${stdout}`);
+            console.log(`stderr: ${stderr}`);
         });
 }
 
@@ -39,6 +38,9 @@ router.use(function(req, res, next){
     // console.log('req: ' + req);
     // console.log('res: ' + res);
     // console.log('next: ' + next);
+    // allow for cors
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     console.log('Middleware called.');
     next();
 });
@@ -50,12 +52,14 @@ router.get('/', function(req, res) {
 router.get('/update', function (req, res) {
     console.log('Updating');
     //call update script
+    callScript();
     res.json({ message: 'Update finished.' });
 });
 
 router.get('/search/:search_val', function (req, res) {
     console.log('Searching');
     //call search script
+    callScript();
     res.json({ message: 'Search finished.' });
 });
 
