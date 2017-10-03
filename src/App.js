@@ -2,10 +2,29 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+// function callScript() {
+//     var util = require('util'),
+//         exec = require('child_process').exec,
+//         child;
+//
+//     child = exec('dir', // command line argument directly in string
+//         function (error, stdout, stderr) {      // one easy function to capture data/errors
+//             console.log('stdout: ' + stdout);
+//             console.log('stderr: ' + stderr);
+//             if (error !== null) {
+//                 console.log('exec error: ' + error);
+//             }
+//         });
+// }
+
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {isUpdating: false};
+        this.state = {
+            isUpdating: false,
+            isSearching: false,
+            searchValue: "",
+        };
     }
 
     sleep(ms) {
@@ -15,10 +34,22 @@ class App extends Component {
     async updateDB(e) {
         e.preventDefault();
         this.setState({isUpdating: true});
-        console.log(this.state);
         console.log('Updating DB.');
+        // callScript();
         await this.sleep(2000);
         this.setState({isUpdating: false});
+    }
+
+    async searchNAS(e) {
+        e.preventDefault();
+        this.setState({isSearching: true});
+        console.log('searching');
+        await this.sleep(2000);
+        this.setState({isSearching: false});
+    }
+
+    handleSearchOnChange(e) {
+        this.setState({searchValue: e.target.value});
     }
 
     render() {
@@ -37,9 +68,16 @@ class App extends Component {
                             </button>. Keep in mind this is automatically done once a day.
                         </p>
                 }
-                <p className="App-search">
-                    To get started, edit <code>src/App.js</code> and save to reload.
-                </p>
+                {
+                    this.state.isSearching ? <p className="App-search">Searching...</p> :
+                        <form className="App-search" onSubmit={this.searchNAS.bind(this)}>
+                            <label>
+                                Search:&nbsp;
+                                <input type="text" value={this.state.searchValue} onChange={this.handleSearchOnChange.bind(this)}/>
+                            </label>
+                            <input type="submit" value="Submit" />
+                        </form>
+                }
             </div>
         );
     }
