@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
 
+const HOST = 'home.search';
+const API_PORT = '8080';
+const API = 'api';
+const HTTP = 'http://'
+const API_UPDATE = `${API}/update`;
+const API_SEARCH = `${API}/search`;
+const UPDATE_REQUEST = `${HTTP}${HOST}:${API_PORT}/${API_UPDATE}`;
+const SEARCH_REQUEST = `${HTTP}${HOST}:${API_PORT}/${API_SEARCH}`;
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -8,6 +17,7 @@ class App extends Component {
             isUpdating: false,
             isSearching: false,
             searchValue: "",
+            searchResults: [],
         };
     }
 
@@ -16,7 +26,7 @@ class App extends Component {
         this.setState({isUpdating: true});
         console.log('Updating DB.');
         //make update call on restful api.
-        await fetch('http://localhost:8080/api/update')
+        await fetch(UPDATE_REQUEST)
             .then(function(response) {
                 console.log(response.json());
             }).catch(function(error) {
@@ -28,12 +38,14 @@ class App extends Component {
     async searchNAS(e) {
         e.preventDefault();
         this.setState({isSearching: true});
-        var request = 'http://localhost:8080/api/search/' + encodeURI(this.state.searchValue)
+        var request = SEARCH_REQUEST + encodeURI(this.state.searchValue)
         console.log('search request: ' + request);
         //make update call on restful api.
         await fetch(request)
             .then(function(response) {
-                console.log(response.json());
+                const json = response.json();
+                console.log(json);
+                this.setState({searchResults: json.results});
             }).catch(function(error) {
                 console.log('Request failed', error)
             });
@@ -42,6 +54,15 @@ class App extends Component {
 
     handleSearchOnChange(e) {
         this.setState({searchValue: e.target.value});
+    }
+
+    SearchResultsList(props) {
+        const listItems = props.results.map((item) => {<li>item</li>});
+        return (
+            <ul>
+                {listItems}
+            </ul>
+        );
     }
 
     render() {
@@ -70,6 +91,7 @@ class App extends Component {
                             <input type="submit" value="Submit" />
                         </form>
                 }
+                <this.SearchResultsList results={this.state.searchResults}/>
             </div>
         );
     }
