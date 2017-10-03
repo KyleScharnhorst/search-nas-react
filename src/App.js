@@ -19,8 +19,13 @@ class App extends Component {
         e.preventDefault();
         this.setState({isUpdating: true});
         console.log('Updating DB.');
-        // callScript();
-        await this.sleep(2000);
+        //make update call on restful api.
+        await fetch('http://localhost:8080/api/update')
+            .then(function(response) {
+                console.log(response.json());
+            }).catch(function(error) {
+            console.log('Request failed', error)
+        });
         this.setState({isUpdating: false});
     }
 
