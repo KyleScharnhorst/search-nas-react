@@ -44,7 +44,7 @@ class App extends Component {
         await fetch(request)
             .then(function(response) {
                 const json = response.json();
-                console.log(json);
+                console.log(json.results);
                 this.setState({searchResults: json.results});
             }).catch(function(error) {
                 console.log('Request failed', error)
