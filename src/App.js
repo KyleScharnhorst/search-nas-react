@@ -6,7 +6,7 @@ const API_PORT = '8080';
 const API = 'api';
 const HTTP = 'http://'
 const API_UPDATE = `${API}/update`;
-const API_SEARCH = `${API}/search`;
+const API_SEARCH = `${API}/search/`;
 const UPDATE_REQUEST = `${HTTP}${HOST}:${API_PORT}/${API_UPDATE}`;
 const SEARCH_REQUEST = `${HTTP}${HOST}:${API_PORT}/${API_SEARCH}`;
 
