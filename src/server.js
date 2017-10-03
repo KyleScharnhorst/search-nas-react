@@ -1,3 +1,4 @@
+import {execAsync} from 'async-child-process';
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -15,19 +16,21 @@ var router = express.Router();
 //
 // SCRIPT EXECUTION
 //
-function callScript(arg) {
-    const { exec } = require('child_process');
+async function callScript(arg) {
+    // const { exec } = require('child_process');
     console.log('executing arg: ' + arg);
-    return exec(arg, // command line argument directly in string
-        function (error, stdout, stderr) {      // one easy function to capture data/errors
-            if (error) {
-                console.error(`exec error: ${error}`);
-                return;
-            }
-            console.log(`stdout: ${stdout}`);
-            console.log(`stderr: ${stderr}`);
-            return stdout.split("\n");
-        });
+    const {stdout} = await execAsync(arg);
+    return stdout.split("\n");
+    // return exec(arg, // command line argument directly in string
+    //     function (error, stdout, stderr) {      // one easy function to capture data/errors
+    //         if (error) {
+    //             console.error(`exec error: ${error}`);
+    //             return;
+    //         }
+    //         console.log(`stdout: ${stdout}`);
+    //         console.log(`stderr: ${stderr}`);
+    //         return stdout.split("\n");
+    //     });
 }
 
 //
