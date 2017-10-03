@@ -26,6 +26,7 @@ function callScript(arg) {
             }
             console.log(`stdout: ${stdout}`);
             console.log(`stderr: ${stderr}`);
+            return stdout.split("\n");
         });
 }
 
@@ -57,8 +58,8 @@ router.get('/search/:search_val', function (req, res) {
     var value = req.params.search_val;
     console.log('Searching for: ' + value);
     //call search script
-    callScript('searchNAS.sh ' + value);
-    res.json({ message: 'Search finished.' });
+    var search_results = callScript('searchNAS.sh ' + value);
+    res.json({ message: 'Search finished.', results: search_results });
 });
 
 //register routes
