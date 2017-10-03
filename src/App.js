@@ -42,7 +42,7 @@ class App extends Component {
         console.log('search request: ' + request);
         //make update call on restful api.
         await fetch(request)
-            .then( async function(response) {
+            .then( async (response) => {
                 const json = await response.json();
                 console.log(json.results);
                 this.setState({searchResults: json.results});
