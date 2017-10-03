@@ -48,7 +48,7 @@ class App extends Component {
                 this.setState({searchResults: json.results});
             }).catch(function(error) {
                 console.log('Request failed', error)
-            }).bind(this);
+            });
         this.setState({isSearching: false});
     }
 
