@@ -18,7 +18,7 @@ var router = express.Router();
 function callScript(arg) {
     const { exec } = require('child_process');
     console.log('executing arg: ' + arg);
-    exec(arg, // command line argument directly in string
+    return exec(arg, // command line argument directly in string
         function (error, stdout, stderr) {      // one easy function to capture data/errors
             if (error) {
                 console.error(`exec error: ${error}`);
@@ -59,6 +59,7 @@ router.get('/search/:search_val', function (req, res) {
     console.log('Searching for: ' + value);
     //call search script
     var search_results = callScript('searchNAS.sh ' + value);
+    console.log(search_results);
     res.json({ message: 'Search finished.', results: search_results });
 });
 
