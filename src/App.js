@@ -8,17 +8,19 @@ class App extends Component {
         this.state = {isUpdating: false};
     }
 
-    updateDB(e) {
-        e.preventDefault();
-        if(!this.state.isUpdating) {
-            setState({isUpdating: true});
-            console.log('Updating DB.');
-            setState({isUpdating: false});
-        } else {
-            console.log('Already updating DB.')
-        }
+    sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
-    
+
+    async updateDB(e) {
+        e.preventDefault();
+        this.setState({isUpdating: true});
+        console.log(this.state);
+        console.log('Updating DB.');
+        await this.sleep(2000);
+        this.setState({isUpdating: false});
+    }
+
     render() {
         return (
             <div className="App">
@@ -26,12 +28,15 @@ class App extends Component {
                     <img src={logo} className="App-logo" alt="logo" />
                     <h1 className="App-title">Search NAS Utility</h1>
                 </header>
-                <p className="App-update">
-                    To manually update the search database click&nbsp;
-                    <button onClick={this.updateDB}>
-                        here
-                    </button>. Keep in mind this is automatically done once a day.
-                </p>
+                {
+                    this.state.isUpdating ? <p className="App-update">Updating...</p> :
+                        <p className="App-update">
+                            To manually update the search database click&nbsp;
+                            <button onClick={this.updateDB.bind(this)}>
+                                here
+                            </button>. Keep in mind this is automatically done once a day.
+                        </p>
+                }
                 <p className="App-search">
                     To get started, edit <code>src/App.js</code> and save to reload.
                 </p>
