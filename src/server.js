@@ -57,7 +57,7 @@ router.get('/update', function (req, res) {
 });
 
 router.get('/search/:search_val', function (req, res) {
-    console.log('Searching');
+    console.log('Searching for: ' + req.params.search_val);
     //call search script
     callScript();
     res.json({ message: 'Search finished.' });
@@ -65,7 +65,6 @@ router.get('/search/:search_val', function (req, res) {
 
 //register routes
 app.use('/api', router);
-// app.use('/api/search');
 
 //
 // START SERVER
