@@ -11,10 +11,6 @@ class App extends Component {
         };
     }
 
-    sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
     async updateDB(e) {
         e.preventDefault();
         this.setState({isUpdating: true});
