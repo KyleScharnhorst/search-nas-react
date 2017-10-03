@@ -3,11 +3,22 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
-    updateDB(e) {
-        e.preventDefault();
-        console.log('Updating DB.');
+    constructor(props) {
+        super(props);
+        this.state = {isUpdating: false};
     }
 
+    updateDB(e) {
+        e.preventDefault();
+        if(!this.state.isUpdating) {
+            setState({isUpdating: true});
+            console.log('Updating DB.');
+            setState({isUpdating: false});
+        } else {
+            console.log('Already updating DB.')
+        }
+    }
+    
     render() {
         return (
             <div className="App">
