@@ -15,10 +15,10 @@ var router = express.Router();
 //
 // SCRIPT EXECUTION
 //
-function callScript() {
+function callScript(arg) {
     const { exec } = require('child_process');
-
-    exec('dir', // command line argument directly in string
+    console.log('executing arg: ' + arg);
+    exec(arg, // command line argument directly in string
         function (error, stdout, stderr) {      // one easy function to capture data/errors
             if (error) {
                 console.error(`exec error: ${error}`);
@@ -35,10 +35,7 @@ function callScript() {
 
 //middleware used to catch before being router to handling function.
 router.use(function(req, res, next){
-    // console.log('req: ' + req);
-    // console.log('res: ' + res);
-    // console.log('next: ' + next);
-    // allow for cors
+    // allow for CORS (error occured in testing when react app was calling rest api).
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     console.log('Middleware called.');
@@ -52,14 +49,15 @@ router.get('/', function(req, res) {
 router.get('/update', function (req, res) {
     console.log('Updating');
     //call update script
-    callScript();
+    callScript('updateNAS.sh');
     res.json({ message: 'Update finished.' });
 });
 
 router.get('/search/:search_val', function (req, res) {
-    console.log('Searching for: ' + req.params.search_val);
+    var value = req.params.search_val;
+    console.log('Searching for: ' + value);
     //call search script
-    callScript();
+    callScript('searchNAS.sh ' + value);
     res.json({ message: 'Search finished.' });
 });
 
