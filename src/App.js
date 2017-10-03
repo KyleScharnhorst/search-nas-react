@@ -59,7 +59,7 @@ class App extends Component {
     SearchResultsList(props) {
         const listItems = props.results.map((item) => { return (<li>{item}</li>) });
         return (
-            <ul>
+            <ul className="App-search-results">
                 {listItems}
             </ul>
         );
