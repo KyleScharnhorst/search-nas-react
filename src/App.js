@@ -1,21 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 
-// function callScript() {
-//     var util = require('util'),
-//         exec = require('child_process').exec,
-//         child;
-//
-//     child = exec('dir', // command line argument directly in string
-//         function (error, stdout, stderr) {      // one easy function to capture data/errors
-//             console.log('stdout: ' + stdout);
-//             console.log('stderr: ' + stderr);
-//             if (error !== null) {
-//                 console.log('exec error: ' + error);
-//             }
-//         });
-// }
-
 class App extends Component {
     constructor(props) {
         super(props);
