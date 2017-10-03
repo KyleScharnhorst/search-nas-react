@@ -1,4 +1,4 @@
-import {execAsync} from 'async-child-process';
+var execAsync = require('async-child-process').execAsync;
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
