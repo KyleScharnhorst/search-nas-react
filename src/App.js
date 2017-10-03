@@ -32,8 +32,15 @@ class App extends Component {
     async searchNAS(e) {
         e.preventDefault();
         this.setState({isSearching: true});
-        console.log('searching');
-        await this.sleep(2000);
+        var request = 'http://localhost:8080/api/search/' + encodeURI(this.state.searchValue)
+        console.log('search request: ' + request);
+        //make update call on restful api.
+        await fetch(request)
+            .then(function(response) {
+                console.log(response.json());
+            }).catch(function(error) {
+                console.log('Request failed', error)
+            });
         this.setState({isSearching: false});
     }
 
