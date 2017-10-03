@@ -20,7 +20,9 @@ async function callScript(arg) {
     // const { exec } = require('child_process');
     console.log('executing arg: ' + arg);
     const {stdout} = await execAsync(arg);
-    return stdout.split("\n");
+    var results = stdout.split("\n");
+    console.log(results);
+    return results;
     // return exec(arg, // command line argument directly in string
     //     function (error, stdout, stderr) {      // one easy function to capture data/errors
     //         if (error) {
