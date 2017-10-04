@@ -57,17 +57,21 @@ class App extends Component {
     }
 
     SearchResultsList(props) {
-        const listItems = props.results.map((item, index) => {
-            if(item === "") {
-                return (null);
-            }
-            return (<li key={index}>{item}</li>)
-        });
-        return (
-            <ul className="App-search-results">
-                {listItems}
-            </ul>
-        );
+        if(!props.results) {
+            return (null);
+        } else {
+            const listItems = props.results.map((item, index) => {
+                if(item === "") {
+                    return (null);
+                }
+                return (<li key={index}>{item}</li>)
+            });
+            return (
+                <ul className="App-search-results">
+                    {listItems}
+                </ul>
+            );
+        }
     }
 
     render() {
