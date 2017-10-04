@@ -18,7 +18,7 @@ var router = express.Router();
 //
 async function callScript(arg) {
     console.log('executing arg: ' + arg);
-    const {stdout} = await execAsync(arg, {maxBuffer: 10485760}); //set max buffer to 10MB
+    const {stdout} = await execAsync('/bin/bash ' + arg, {maxBuffer: 10485760}); //set max buffer to 10MB
     const results = stdout.split("\n");
     console.log(results);
     return results;
