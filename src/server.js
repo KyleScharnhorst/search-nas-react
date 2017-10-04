@@ -19,7 +19,7 @@ var router = express.Router();
 async function callScript(arg) {
     // const { exec } = require('child_process');
     console.log('executing arg: ' + arg);
-    const {stdout} = await execAsync(arg);
+    const {stdout} = await execAsync(arg, {maxBuffer: 10485760}); //set max buffer to 10MB
     const results = stdout.split("\n");
     console.log(results);
     return results;
@@ -55,7 +55,9 @@ router.get('/', function(req, res) {
 router.get('/update', async function (req, res) {
     console.log('Updating');
     //call update script
-    await callScript('updateNAS.sh');
+    await callScript('updateNAS.sh').catch((e) => {
+        console.error(e);
+    });
     res.json({ message: 'Update finished.' });
 });
 
@@ -63,7 +65,9 @@ router.get('/search/:search_val', async function (req, res) {
     const value = req.params.search_val;
     console.log('Searching for: ' + value);
     //call search script
-    const search_results = await callScript('searchNAS.sh ' + value);
+    const search_results = await callScript('searchNAS.sh ' + value).catch((e) => {
+        console.error(e);
+    });;
     console.log(search_results);
     res.json({ message: 'Search finished.', results: search_results });
 });
