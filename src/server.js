@@ -17,22 +17,11 @@ var router = express.Router();
 // SCRIPT EXECUTION
 //
 async function callScript(arg) {
-    // const { exec } = require('child_process');
     console.log('executing arg: ' + arg);
     const {stdout} = await execAsync(arg, {maxBuffer: 10485760}); //set max buffer to 10MB
     const results = stdout.split("\n");
     console.log(results);
     return results;
-    // return exec(arg, // command line argument directly in string
-    //     function (error, stdout, stderr) {      // one easy function to capture data/errors
-    //         if (error) {
-    //             console.error(`exec error: ${error}`);
-    //             return;
-    //         }
-    //         console.log(`stdout: ${stdout}`);
-    //         console.log(`stderr: ${stderr}`);
-    //         return stdout.split("\n");
-    //     });
 }
 
 //
