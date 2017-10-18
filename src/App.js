@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-const HOST = 'home.search';
+const HOST = 'khorst.ooguy.com';
 const API_PORT = '8080';
 const API = 'api';
 const HTTP = 'http://'
